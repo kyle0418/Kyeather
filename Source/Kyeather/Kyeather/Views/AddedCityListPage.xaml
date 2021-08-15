@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
+             xmlns:converters="clr-namespace:Kyeather.Converts" 
+             xmlns:behaviors="clr-namespace:Kyeather.Behaviors"
+             x:Class="Kyeather.Views.AddedCityListPage"
+             NavigationPage.HasNavigationBar="False"
+             x:Name="AddedCityList">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:ItemSelectedEventArgsConverter x:Key="ItemSelectedEventArgsConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid Padding="10,10"
+              BackgroundColor="#2C6A91"
+              ColumnDefinitions="*,*"
+              RowDefinitions="Auto,*,Auto,Auto">
+            <StackLayout Grid.ColumnSpan="2"
+                         Padding="10,0"
+                         Orientation="Horizontal">
+                <Label Text="管理城市" 
+                       FontSize="Large" 
+                       TextColor="White"
+                       HorizontalOptions="Start"/>
+                <Label Text="{Binding EditText}"
+                       FontSize="Large" 
+                       TextColor="White"
+                       HorizontalOptions="EndAndExpand">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding EditCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+            <ListView x:Name="matchCityView"
+                      Grid.Row="1"
+                      Grid.ColumnSpan="2"
+                      ItemsSource="{Binding AddedCityList}"
+                      SelectedItem="{Binding SelectedCity, Mode=TwoWay}"
+                      SelectionMode="Single"
+                      BackgroundColor="Transparent"
+                      SeparatorVisibility="None"
+                      HasUnevenRows="True">
+                <ListView.Behaviors>
+                    <xct:EventToCommandBehavior
+                            EventName="ItemSelected"
+                            Command="{Binding SelectedCommand}"
+                            EventArgsConverter="{StaticResource ItemSelectedEventArgsConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="0,4" 
+                                  BackgroundColor="Transparent">
+                                <Frame Padding="10,10"
+                                       CornerRadius="20"
+                                       HasShadow="True"
+                                       BackgroundColor="{Binding WeatherInfo.Temp,
+                                                  Converter={converters:BackgroundColorConverter IsStart=True}}">
+                                    <Grid RowDefinitions="*,*,*">
+                                        <!--<Button BackgroundColor="Transparent"
+                                                Grid.RowSpan="3">
+                                            <Button.Behaviors>
+                                                <behaviors:LongPressBehavior Command="{Binding Source={x:Reference Name=AddedCityList}, Path=BindingContext.LongPressCommand}"/>
+                                            </Button.Behaviors>
+                                        </Button>-->
+                                        <StackLayout Orientation="Horizontal"
+                                                     Grid.RowSpan="3"
+                                                     VerticalOptions="CenterAndExpand">
+                                            <Label Text="{Binding Name}" 
+                                                   TextColor="White"
+                                                   FontSize="Large" 
+                                                   VerticalTextAlignment="Center"/>
+                                            <Image HeightRequest="25"
+                                                   VerticalOptions="End"
+                                                   HorizontalOptions="Start"
+                                                   Aspect="AspectFit"
+                                                   Source="located.png"
+                                                   IsVisible="{Binding IsLocated}"/>
+                                        </StackLayout>
+                                        <ImageButton Source="deleteIcon.png"
+                                                     IsEnabled="{Binding Source={x:Reference Name=AddedCityList}, Path=BindingContext.ShowDeleteButton}"
+                                                     IsVisible="{Binding Source={x:Reference Name=AddedCityList}, Path=BindingContext.ShowDeleteButton}"
+                                                     CornerRadius="15"
+                                                     HeightRequest="30"
+                                                     WidthRequest="30"
+                                                     Grid.RowSpan="3"
+                                                     VerticalOptions="Center"
+                                                     HorizontalOptions="End"
+                                                     Command="{Binding Source={x:Reference Name=AddedCityList}, Path=BindingContext.DeleteCommand}"
+                                                     CommandParameter="{Binding .}"/>
+                                        <Label Grid.RowSpan="2"
+                                               Text="{Binding WeatherInfo.Temp, StringFormat='{0}°C'}" 
+                                               TextColor="White"
+                                               FontSize="Large" 
+                                               VerticalTextAlignment="Center"
+                                               HorizontalTextAlignment="End"/>
+                                        <Label Grid.Row="2"
+                                               Text="{Binding WeatherInfo.Weather}" 
+                                               TextColor="White"
+                                               FontSize="Small" 
+                                               VerticalTextAlignment="Center"
+                                               HorizontalTextAlignment="End"/>
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--<Button Text="＋"
+                    FontSize="Large"
+                    TextColor="White"
+                    BorderWidth="0"
+                    Command="{Binding OpenAddNewCityPageCommand}"
+                    VerticalOptions="End"
+                    BackgroundColor="Green"/>-->
+            <Label Grid.Row="2"
+                   Grid.ColumnSpan="2"
+                   Text="✚" BackgroundColor="Transparent"
+                   TextColor="White" 
+                   FontSize="Large" 
+                   VerticalOptions="End"
+                   HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenAddNewCityPageCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Grid.Row="3"
+                   Grid.ColumnSpan="2"
+                   Text="添加城市"
+                   TextColor="White" 
+                   FontSize="Micro" 
+                   VerticalOptions="End"
+                   HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenAddNewCityPageCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

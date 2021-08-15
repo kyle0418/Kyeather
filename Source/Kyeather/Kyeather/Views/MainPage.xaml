@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:converters="clr-namespace:Kyeather.Converts"
+             xmlns:viewmodels="clr-namespace:Kyeather.ViewModels"
+             x:Class="Kyeather.MainPage"
+             x:Name="WeatherPage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.BindingContext>
+        <viewmodels:WeatherViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="*, Auto">
+        <RefreshView IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                     Command="{Binding RefreshCommand}"
+                     Grid.RowSpan="2">
+            <CarouselView x:Name="weatherView"
+                          Margin="0,0,0,0"
+                          BackgroundColor="Transparent"
+                          HeightRequest="80"
+                          HorizontalOptions="Center"
+                          IndicatorView="indicatorView"
+                          ItemsSource="{Binding AddedCityList}"
+                          CurrentItem="{Binding CurrentCity, Mode=TwoWay}"
+                          Loop="False"
+                          IsBounceEnabled="False">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <pancake:PancakeView BackgroundGradientEndPoint="0,1"
+                                     x:Name="Background">
+                            <pancake:PancakeView.BackgroundGradientStops>
+                                <pancake:GradientStopCollection>
+                                    <pancake:GradientStop Color="{Binding BackgroundTemp,
+                                                        Converter={converters:BackgroundColorConverter IsStart=True}}" 
+                                                      Offset="0.1"/>
+                                    <pancake:GradientStop  Color="{Binding BackgroundTemp,
+                                                        Converter={converters:BackgroundColorConverter IsStart=False}}"
+                                                       Offset="1"/>
+                                </pancake:GradientStopCollection>
+                            </pancake:PancakeView.BackgroundGradientStops>
+                            <Grid Padding="0,24,0,30"
+                          RowSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid ColumnSpacing="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label x:Name="cityName"
+                                       Grid.Column="1"
+                                       Text="{Binding Name}"
+                                       FontSize="Large"
+                                       TextColor="{StaticResource MainTextColor}"
+                                       VerticalOptions="Start">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="City_TapGestureRecognizer_Tapped"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Image Grid.Column="2"
+                                       HeightRequest="25"
+                                       VerticalOptions="End"
+                                       HorizontalOptions="Start"
+                                       Aspect="AspectFit"
+                                       Source="located.png"
+                                       IsVisible="{Binding IsLocated}"/>
+                                </Grid>
+
+                                <Image Grid.Row="1"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="CenterAndExpand"
+                               HeightRequest="250"
+                               WidthRequest="250"
+                               Source="{Binding WeatherInfo.Icon, StringFormat='color{0}.png'}"/>
+
+                                <Grid Grid.Row="2" ColumnSpacing="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="1"
+                                   Style="{StaticResource LabelTemperatureStyle}"
+                                   Text="{Binding WeatherInfo.Temp}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Label Grid.Column="2"
+                                   Style="{StaticResource LabelTemperatureStyle}"
+                                   Text="°"
+                                   HorizontalOptions="Start"/>
+                                </Grid>
+
+                                <Label Grid.Row="3"
+                               HorizontalOptions="Center"
+                               Text="{Binding WeatherInfo.Weather}"
+                               FontSize="Large"
+                               TextColor="{StaticResource MainTextColor}"/>
+
+                                <StackLayout Grid.Row="4" 
+                                     Orientation="Horizontal"
+                                     HorizontalOptions="Center">
+                                    <Label HorizontalOptions="End"
+                                    Text="{Binding CityInfoOfDayList[0].TempMax, StringFormat='{0}°'}"
+                                    FontSize="Medium"
+                                    TextColor="{StaticResource MainTextColor}"/>
+                                    <Label HorizontalOptions="Center"
+                                    Text="/"
+                                    FontSize="Medium"
+                                    TextColor="{StaticResource MainTextColor}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped1"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Label HorizontalOptions="Start"
+                                    Text="{Binding CityInfoOfDayList[0].TempMin, StringFormat='{0}°'}"
+                                    FontSize="Medium"
+                                    TextColor="{StaticResource MainTextColor}"/>
+                                </StackLayout>
+                            </Grid>
+                        </pancake:PancakeView>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+                <CarouselView.EmptyView>
+                    <StackLayout HorizontalOptions="CenterAndExpand"
+                                 VerticalOptions="CenterAndExpand"
+                                 BackgroundColor="Red">
+                        <pancake:PancakeView BackgroundGradientEndPoint="0,1"
+                                             VerticalOptions="FillAndExpand"
+                                             HorizontalOptions="FillAndExpand">
+                            <pancake:PancakeView.BackgroundGradientStops>
+                                <pancake:GradientStopCollection>
+                                    <pancake:GradientStop Color="LightBlue" 
+                                                      Offset="0.1"/>
+                                    <pancake:GradientStop  Color="LightYellow"
+                                                       Offset="1"/>
+                                </pancake:GradientStopCollection>
+                            </pancake:PancakeView.BackgroundGradientStops>
+
+                            <Label Text="请退出并检查当前网络连接"
+                                   FontSize="Large"
+                                   VerticalOptions="CenterAndExpand"
+                                   HorizontalOptions="CenterAndExpand"/>
+                        </pancake:PancakeView>
+                    </StackLayout>
+                </CarouselView.EmptyView>
+            </CarouselView>
+        </RefreshView>
+
+        <IndicatorView Grid.Row="1"
+                   x:Name="indicatorView"
+                   IndicatorsShape="Circle"
+                   IndicatorColor="LightGray"
+                   SelectedIndicatorColor="White"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10" />
+    </Grid>
+</ContentPage>

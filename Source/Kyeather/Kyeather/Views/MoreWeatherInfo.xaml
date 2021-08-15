@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:converters="clr-namespace:Kyeather.Converts"
+             x:Class="Kyeather.Views.MoreWeatherInfo"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto,*"
+              BindingContext="{Binding CurrentCity}"
+              BackgroundColor="#2C6A91"
+              Padding="0,5,0,10">
+            <Label Text="{Binding Name, StringFormat='{0}•三日预报'}"
+                   TextColor="Black"
+                   HorizontalOptions="Center"
+                   FontSize="Large"/>
+            <Grid Grid.Row="1" RowDefinitions="*,*,*">
+
+                <Frame Grid.Row="0" CornerRadius="25" Padding="0" Margin="5,0">
+                    <StackLayout BackgroundColor="#4C9FE1">
+                        <Grid RowDefinitions="Auto,Auto,*"
+                          ColumnDefinitions="*,*">
+                            <Label Grid.ColumnSpan="2" Text="今日" HorizontalTextAlignment="Center" FontSize="Small" TextColor="Black" FontAttributes="Bold"/>
+                            <StackLayout Grid.Row="1" HorizontalOptions="CenterAndExpand">
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[0].TempMax, StringFormat='最高气温：{0}°C'}"/>
+                                <Label  Style="{StaticResource LabelMoreWeatherInfo}"
+                                    Text="{Binding CityInfoOfDayList[0].TempMin, StringFormat='最低气温：{0}°C'}"/>
+                            </StackLayout>
+                            <StackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="CenterAndExpand">
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[0].Sunrise, StringFormat='日出时间：{0}'}"/>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[0].Sunset, StringFormat='日落时间：{0}'}"/>
+                            </StackLayout>
+                            <StackLayout Grid.Row="2" HorizontalOptions="CenterAndExpand"
+                                     VerticalOptions="End">
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   FontSize="Large"
+                                   Text="白天"/>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="CenterAndExpand"
+                                       HeightRequest="50"
+                                       WidthRequest="50"
+                                       Source="{Binding CityInfoOfDayList[0].IconDay, StringFormat='color{0}.png'}"/>
+                                    <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                       VerticalOptions="Center"
+                                       Text="{Binding CityInfoOfDayList[0].TextDay}"/>
+                                </StackLayout>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[0].WindDirDay}"/>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[0].WindScaleDay, StringFormat='{0}级'}"/>
+                            </StackLayout>
+                            <StackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="CenterAndExpand"
+                                     VerticalOptions="End">
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   FontSize="Large"
+                                   Text="夜间"/>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="CenterAndExpand"
+                                       HeightRequest="50"
+                                       WidthRequest="50"
+                                       Source="{Binding CityInfoOfDayList[0].IconNight, StringFormat='color{0}.png'}"/>
+                                    <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                       VerticalOptions="Center"
+                                       Text="{Binding CityInfoOfDayList[0].TextNight}"/>
+                                </StackLayout>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[0].WindDirNight}"/>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[0].WindScaleNight, StringFormat='{0}级'}"/>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+
+                <Frame Grid.Row="1" CornerRadius="25" Padding="0" Margin="5,0">
+                    <StackLayout BackgroundColor="#7cb9e9">
+                        <Grid RowDefinitions="Auto,Auto,*"
+                          ColumnDefinitions="*,*">
+                            <Label Grid.ColumnSpan="2" Text="明日" HorizontalTextAlignment="Center" FontSize="Small" TextColor="Black" FontAttributes="Bold"/>
+                            <StackLayout Grid.Row="1" HorizontalOptions="CenterAndExpand">
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[1].TempMax, StringFormat='最高气温：{0}°C'}"/>
+                                <Label  Style="{StaticResource LabelMoreWeatherInfo}"
+                                    Text="{Binding CityInfoOfDayList[1].TempMin, StringFormat='最低气温：{0}°C'}"/>
+                            </StackLayout>
+                            <StackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="CenterAndExpand">
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[1].Sunrise, StringFormat='日出时间：{0}'}"/>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[1].Sunset, StringFormat='日落时间：{0}'}"/>
+                            </StackLayout>
+                            <StackLayout Grid.Row="2" HorizontalOptions="CenterAndExpand"
+                                         VerticalOptions="End">
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   FontSize="Large"
+                                   Text="白天"/>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="CenterAndExpand"
+                                       HeightRequest="50"
+                                       WidthRequest="50"
+                                       Source="{Binding CityInfoOfDayList[1].IconDay, StringFormat='color{0}.png'}"/>
+                                    <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                       VerticalOptions="Center"
+                                       Text="{Binding CityInfoOfDayList[1].TextDay}"/>
+                                </StackLayout>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[1].WindDirDay}"/>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[1].WindScaleDay, StringFormat='{0}级'}"/>
+                            </StackLayout>
+                            <StackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="CenterAndExpand"
+                                         VerticalOptions="End">
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   FontSize="Large"
+                                   Text="夜间"/>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="CenterAndExpand"
+                                       HeightRequest="50"
+                                       WidthRequest="50"
+                                       Source="{Binding CityInfoOfDayList[1].IconNight, StringFormat='color{0}.png'}"/>
+                                    <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                       VerticalOptions="Center"
+                                       Text="{Binding CityInfoOfDayList[1].TextNight}"/>
+                                </StackLayout>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[1].WindDirNight}"/>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[1].WindScaleNight, StringFormat='{0}级'}"/>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+
+                <Frame Grid.Row="2" CornerRadius="25" Padding="0" Margin="5,0">
+                    <StackLayout BackgroundColor="#bedcf4">
+                        <Grid RowDefinitions="Auto,Auto,*"
+                          ColumnDefinitions="*,*">
+                            <Label Grid.ColumnSpan="2" Text="后日" HorizontalTextAlignment="Center" FontSize="Small" TextColor="Black" FontAttributes="Bold"/>
+                            <StackLayout Grid.Row="1" HorizontalOptions="CenterAndExpand">
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[2].TempMax, StringFormat='最高气温：{0}°C'}"/>
+                                <Label  Style="{StaticResource LabelMoreWeatherInfo}"
+                                    Text="{Binding CityInfoOfDayList[2].TempMin, StringFormat='最低气温：{0}°C'}"/>
+                            </StackLayout>
+                            <StackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="CenterAndExpand">
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[2].Sunrise, StringFormat='日出时间：{0}'}"/>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[2].Sunset, StringFormat='日落时间：{0}'}"/>
+                            </StackLayout>
+                            <StackLayout Grid.Row="2" HorizontalOptions="CenterAndExpand"
+                                         VerticalOptions="End">
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   FontSize="Large"
+                                   Text="白天"/>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="CenterAndExpand"
+                                       HeightRequest="50"
+                                       WidthRequest="50"
+                                       Source="{Binding CityInfoOfDayList[2].IconDay, StringFormat='color{0}.png'}"/>
+                                    <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                       VerticalOptions="Center"
+                                       Text="{Binding CityInfoOfDayList[2].TextDay}"/>
+                                </StackLayout>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[2].WindDirDay}"/>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[2].WindScaleDay, StringFormat='{0}级'}"/>
+                            </StackLayout>
+                            <StackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="CenterAndExpand"
+                                         VerticalOptions="End">
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   FontSize="Large"
+                                   Text="夜间"/>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="CenterAndExpand"
+                                       HeightRequest="50"
+                                       WidthRequest="50"
+                                       Source="{Binding CityInfoOfDayList[2].IconNight, StringFormat='color{0}.png'}"/>
+                                    <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                       VerticalOptions="Center"
+                                       Text="{Binding CityInfoOfDayList[2].TextNight}"/>
+                                </StackLayout>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[2].WindDirNight}"/>
+                                <Label Style="{StaticResource LabelMoreWeatherInfo}"
+                                   Text="{Binding CityInfoOfDayList[2].WindScaleNight, StringFormat='{0}级'}"/>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
