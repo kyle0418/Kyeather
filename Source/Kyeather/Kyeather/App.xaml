@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Kyeather.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--temp<=0-->
+            <Color x:Key="IceStartColor">#6562FC</Color>
+            <Color x:Key="IceEndColor">#719EFF</Color>
+            <!--0<temp<=15-->
+            <Color x:Key="ColdStartColor">#A1C4FD</Color>
+            <Color x:Key="ColdEndColor">#C2E9FB</Color>
+            <!--15<temp<30-->
+            <Color x:Key="CoolStartColor">#3f98d0</Color>
+            <Color x:Key="CoolEndColor">#88c5f1</Color>
+            <!--temp>30-->
+            <Color x:Key="HotStartColor">#F6CC66</Color>
+            <Color x:Key="HotEndColor">#FCA184</Color>
+            <!--Night-->
+            <Color x:Key="NightStartColor">#172941</Color>
+            <Color x:Key="NightEndColor">#3C6683</Color>
+            <Color x:Key="MainTextColor">White</Color>
+
+            <Style x:Key="LabelTemperatureStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="110"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="{StaticResource MainTextColor}"/>
+            </Style>
+
+            <Style x:Key="LabelMoreWeatherInfo" TargetType="Label">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="Black"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
