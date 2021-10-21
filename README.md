@@ -1,3 +1,7 @@
+**Update 21/10/2021:**
+
+**The program is no longer running due to an API issue.**
+
 # Kyeather
 An android weather app
 
